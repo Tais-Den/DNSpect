@@ -1,5 +1,5 @@
 # DNSpect 🕵️‍♂️
-[![Nightly Build](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml)
+[![Nightly DNSpect Build](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml/badge.svg?branch=trunk)](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml)
 
 **DNSpect** is a containerized DNS audit toolkit built for comprehensive zone inspection, SPF/DMARC/DNSSEC validation, performance analysis, and formal reporting.
 
