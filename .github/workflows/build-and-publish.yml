@@ -14,9 +14,8 @@ jobs:
 
       - name: Hadolint
         uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: Containerfile
 
+        
   build_test:
     needs: lint
     runs-on: ubuntu-latest
