@@ -6,7 +6,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build DNSpect Image
+        run: |
+          docker build -t dnspect:test .
+
+      - name: Verify Tools
+        run: |
+          docker run --rm -v ${{ github.workspace }}/scripts/verify_tools.sh:/verify.sh:ro dnspect:test bash /verify.sh
+
   build_and_push:
+    needs: build_test
     runs-on: ubuntu-latest
     permissions:
       contents: read
