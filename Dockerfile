@@ -63,9 +63,9 @@ ENV PATH="$VIRTUAL_ENV/bin:/usr/local/go/bin:$PATH"
 
 # Install Python tools
 RUN pip install --no-cache-dir \
-    dnsrecon==1.1.0 \
-    dnsviz==1.0.0 \
-    git+https://github.com/farrokhi/dnsdiag.git@v1.0.0
+    dnsrecon==0.10.1 \
+    dnsviz==0.11.1 \
+    git+https://github.com/farrokhi/dnsdiag.git@v2.6.0
 
 # Golang-based dmarc-cat installation
 RUN export GOPATH=/go && \
