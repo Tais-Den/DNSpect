@@ -3,10 +3,33 @@ name: Nightly DNSpect Build
 on:
   schedule:
     - cron: '0 6 * * *'  # 12:00am MT / 6:00am UTC
+  pull_request:
   workflow_dispatch:
 
 jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build container image
+        run: docker build -t dnspect-test -f Containerfile .
+
+      - name: Verify installed tools
+        run: |
+          docker run --rm dnspect-test bash -c "\
+            dig -v && \
+            dnsrecon -h >/dev/null && \
+            amass -version && \
+            dmarc-cat --help >/dev/null && \
+            zonemaster-cli --version && \
+            test \"$(whoami)\" = dnspect \
+          "
+
   build_and_push:
+    needs: build_test
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
