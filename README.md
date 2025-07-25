@@ -1,4 +1,6 @@
 # DNSpect 🕵️‍♂️
+[![Nightly Build](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/ajoeofalltrades/DNSpect/actions/workflows/build-and-publish.yml)
+
 **DNSpect** is a containerized DNS audit toolkit built for comprehensive zone inspection, SPF/DMARC/DNSSEC validation, performance analysis, and formal reporting.
 
 ## 🧰 Tooling Stack
@@ -24,7 +26,7 @@ All Python-based tools run inside a virtual environment (`venv`) to avoid global
 
 ```bash
 docker run --rm -it dnspect:latest bash
-````
+```
 
 Inside the container, typical usage might be:
 
@@ -42,60 +44,7 @@ dnsviz example.com
 
 ```bash
 docker build -t dnspect:dev .
-```
-
-## 🔁 CI/CD: GitHub Actions Workflow
-
-Below is a `.github/workflows/build-and-publish.yml` to automatically build and push images to registry on `main` branch or versioned tags:
-
-```yaml
-name: Build and Publish DNSpect Image
-
-on:
-  push:
-    branches: [main]
-    tags: ['v*']
-  workflow_dispatch:
-
-jobs:
-  build_and_push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to registry (GHCR / DockerHub)
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Build and Push image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/dnspect:latest
-            ghcr.io/${{ github.repository_owner }}/dnspect:${{ github.ref_name }}
-          labels: |
-            org.opencontainers.image.source=${{ github.repository }}
-            org.opencontainers.image.version=${{ github.ref_name }}
-
-```
-
-* **Tagging and workflow triggers**: pushes on `main` and releases tagged `v1.0`, etc.
-* **Uses official GitHub token** for secure GHCR login and seamless linking with the repo
-* **Build-push-action** handles building, tagging, and pushing, with metadata from the repo
+``` 
 
 ## 🧩 Example Directory Structure
 
@@ -112,8 +61,7 @@ jobs:
 ```
 
 ## ⚙️ Versioning & Tagging
-* Tags like `v1.0`, `v1.1` trigger versioned builds.
-* `latest` always references the most recent build on `main`.
+* `latest` always references the most recent nightly build on `trunk`.
 
 ## 🤝 Contributing & Support
 Please open issues or PRs for new tool support, bug fixes, or enhancements.
