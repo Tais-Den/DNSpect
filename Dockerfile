@@ -80,8 +80,8 @@ RUN cpanm --notest Zonemaster::LDNS && \
 # Install Amass
 RUN curl -L -o /tmp/amass.zip https://github.com/owasp-amass/amass/releases/latest/download/amass_linux_amd64.zip && \
     unzip /tmp/amass.zip -d /tmp && \
-    mv /tmp/amass_linux_amd64/amass /usr/local/bin/amass && \
-    rm -rf /tmp/amass_linux_amd64 /tmp/amass.zip
+    mv /tmp/amass*/amass /usr/local/bin/amass && \
+    rm -rf /tmp/amass* /tmp/amass.zip
 
 # Install dnsperf & resperf from source
 RUN git clone https://github.com/DNS-OARC/dnsperf.git /opt/dnsperf
